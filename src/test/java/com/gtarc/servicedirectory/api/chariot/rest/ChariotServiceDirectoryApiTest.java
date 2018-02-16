@@ -34,16 +34,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.gtarc.chariot.model.runtimeenvironment.Device;
-import com.gtarc.chariot.model.runtimeenvironment.SensingDevice;
-import com.gtarc.chariot.model.util.builder.DeviceBuilder;
-import com.gtarc.chariot.model.util.builder.PropertyBuilder;
 import com.gtarc.servicedirectory.api.chariot.rest.jackson.DeviceMapperModule;
 import com.gtarc.servicedirectory.api.chariot.rest.jaxrs.ChariotMessageBodyReader;
 import com.gtarc.servicedirectory.api.chariot.rest.jaxrs.ChariotMessageBodyWriter;
 import com.gtarc.servicedirectory.api.chariot.rest.jaxrs.JacksonContextResolver;
-import com.gtarc.servicedirectory.api.chariot.rest.resource.DeviceResource;
-import com.gtarc.servicedirectory.api.chariot.rest.resource.RuntimeEnvironmentResource;
+
+import de.tutorial.jaxrs.api.chariot.rest.resource.DeviceResource;
+import de.tutorial.jaxrs.model.runtimeenvironment.Device;
+import de.tutorial.jaxrs.model.runtimeenvironment.SensingDevice;
+import de.tutorial.jaxrs.model.util.builder.DeviceBuilder;
+import de.tutorial.jaxrs.model.util.builder.PropertyBuilder;
 
 /**
  * Test CXF
@@ -121,7 +121,7 @@ public class ChariotServiceDirectoryApiTest extends Assert {
 
 		sf.setResourceClasses(DeviceResource.class);
 		sf.setResourceProvider(DeviceResource.class,
-				new SingletonResourceProvider(new RuntimeEnvironmentResource(), true));
+				new SingletonResourceProvider(new DeviceResource(), true));
 		sf.setAddress(ENDPOINT_ADDRESS);
 
 		sf.getInInterceptors().add(new LoggingInInterceptor());

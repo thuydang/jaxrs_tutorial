@@ -2,11 +2,11 @@ package com.gtarc.servicedirectory.api.chariot.rest.data;
 import java.util.List;
 import java.util.UUID;
 
-import com.gtarc.chariot.model.runtimeenvironment.Device;
-import com.gtarc.chariot.model.runtimeenvironment.RuntimeEnvironment;
-import com.gtarc.chariot.model.runtimeenvironment.SensingDevice;
-import com.gtarc.chariot.model.util.builder.DeviceBuilder;
-import com.gtarc.chariot.model.util.builder.PropertyBuilder;
+import de.tutorial.jaxrs.model.runtimeenvironment.Device;
+import de.tutorial.jaxrs.model.runtimeenvironment.RuntimeEnvironment;
+import de.tutorial.jaxrs.model.runtimeenvironment.SensingDevice;
+import de.tutorial.jaxrs.model.util.builder.DeviceBuilder;
+import de.tutorial.jaxrs.model.util.builder.PropertyBuilder;
 
 import java.net.URI;
 import java.util.ArrayList;

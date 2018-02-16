@@ -1,7 +1,7 @@
 package com.gtarc.servicedirectory.api.chariot.rest.data;
 import java.util.List;
 
-import com.gtarc.chariot.model.runtimeenvironment.User;
+import de.tutorial.jaxrs.model.runtimeenvironment.User;
 
 import java.util.ArrayList;
 

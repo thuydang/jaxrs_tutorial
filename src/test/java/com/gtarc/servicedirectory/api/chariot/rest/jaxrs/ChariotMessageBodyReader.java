@@ -19,15 +19,16 @@ import javax.ws.rs.ext.Provider;
 import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gtarc.chariot.model.runtimeenvironment.ActuatingDevice;
-import com.gtarc.chariot.model.runtimeenvironment.Device;
-import com.gtarc.chariot.model.runtimeenvironment.SensingDevice;
 import com.gtarc.servicedirectory.api.chariot.rest.jackson.ChariotObjectMapper;
+
+import de.tutorial.jaxrs.model.runtimeenvironment.ActuatingDevice;
+import de.tutorial.jaxrs.model.runtimeenvironment.Device;
+import de.tutorial.jaxrs.model.runtimeenvironment.SensingDevice;
 
 //@Consumes({ "application/json", "application/xml"})
 @Consumes("application/json")
 @Provider
-public class ChariotMessageBodyReader implements MessageBodyReader<Device> {
+public class ChariotMessageBodyReader implements MessageBodyReader<Object> {
 	static Logger logger = Logger.getLogger(ChariotMessageBodyReader.class);
 
 	private final ObjectMapper mapper;
@@ -50,7 +51,7 @@ public class ChariotMessageBodyReader implements MessageBodyReader<Device> {
     }
 
 // 	@Override
-	public Device readFrom(Class<Device> type, Type genericType, Annotation[] annotations,
+	public Device readFrom(Class<Object> type, Type genericType, Annotation[] annotations,
 			MediaType mediaType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
  		

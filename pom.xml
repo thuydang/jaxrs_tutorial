@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.gtarc.servicedirectory.api.chariot</groupId>
-	<artifactId>service-directory-api-chariot</artifactId>
+	<groupId>de.tutorial.jaxrs</groupId>
+	<artifactId>jaxrs-jackson-tutorial</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 
@@ -20,17 +20,7 @@
 	</properties>
 
 	<dependencies>
-		<!-- Project deps: Service directory core API -->
-		<dependency>
-			<groupId>com.gtarc.servicedirectory.model.directory</groupId>
-			<artifactId>service-directory-api-core</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.gtarc.chariot.model.runtimeenvironment</groupId>
-			<artifactId>runtime-environment-model</artifactId>
-			<version>1.0</version>
-		</dependency>
+		<!-- Project deps:  -->
 
 		<!-- 3rds -->
 		<!-- Swagger Stuff -->

@@ -12,8 +12,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.gtarc.chariot.model.properties.Property;
-import com.gtarc.chariot.model.runtimeenvironment.Device;
+
+import de.tutorial.jaxrs.model.properties.Property;
+import de.tutorial.jaxrs.model.runtimeenvironment.Device;
 
 public class DeviceMapperModule extends SimpleModule
 {

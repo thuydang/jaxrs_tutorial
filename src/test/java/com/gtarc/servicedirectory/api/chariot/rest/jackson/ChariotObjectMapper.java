@@ -1,7 +1,6 @@
 package com.gtarc.servicedirectory.api.chariot.rest.jackson;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import org.eclipse.emf.common.util.EList;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -9,13 +8,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import com.gtarc.isco.api.model.domainmodel.Device;
-
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.gtarc.isco.api.model.domainmodel.Device;
-import com.gtarc.isco.api.model.domainmodel.Domain;
-import com.gtarc.isco.api.model.domainmodel.Service;
-import com.gtarc.isco.api.model.domainmodel.impl.ServiceImpl;
 
 public class ChariotObjectMapper extends ObjectMapper{
 
