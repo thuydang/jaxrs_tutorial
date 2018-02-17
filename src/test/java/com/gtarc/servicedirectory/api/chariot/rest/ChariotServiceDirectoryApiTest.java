@@ -31,6 +31,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jaxrs.Jaxrs2TypesModule;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -68,16 +69,16 @@ public class ChariotServiceDirectoryApiTest extends Assert {
 		startServer();
 	}
 
-//	private static ObjectMapper createObjectMapper() {
-//		ObjectMapper mapper = new ObjectMapper();
-//
-//		mapper.enableDefaultTyping(); // defaults for defaults (see below); include as wrapper-array, non-concrete types
-//		//mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_OBJECT); // all non-final types
-//		mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_OBJECT); // all non-final types
-//		mapper.registerModule(new DeviceMapperModule());
-//
-//		return mapper;
-//	}
+	//	private static ObjectMapper createObjectMapper() {
+	//		ObjectMapper mapper = new ObjectMapper();
+	//
+	//		mapper.enableDefaultTyping(); // defaults for defaults (see below); include as wrapper-array, non-concrete types
+	//		//mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_OBJECT); // all non-final types
+	//		mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_OBJECT); // all non-final types
+	//		mapper.registerModule(new DeviceMapperModule());
+	//
+	//		return mapper;
+	//	}
 
 	private static void startServer() throws Exception {
 		/**
@@ -97,18 +98,19 @@ public class ChariotServiceDirectoryApiTest extends Assert {
 		//mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_OBJECT); // all non-final types
 		mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_OBJECT); // all non-final types
 		mapper.registerModule(new DeviceMapperModule());
+		mapper.registerModule(new Jaxrs2TypesModule());
 
 
 		// Using ObjectMapperResolver / Provider
-		JacksonJsonProvider jacksonJsonProvider = //new JacksonJsonProvider();
-		new JacksonJsonProvider(mapper);
+		JacksonJsonProvider jacksonJsonProvider = new JacksonJsonProvider();
+		//		new JacksonJsonProvider(mapper);
 		//jacksonJsonProvider.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
 		providers.add(jacksonJsonProvider);
-		
+
 		//jackson jaxb
-		JacksonJaxbJsonProvider jacksonJaxbJsonProvider = new JacksonJaxbJsonProvider();
-		jacksonJaxbJsonProvider.setMapper(mapper);
-		providers.add(jacksonJaxbJsonProvider);
+		//		JacksonJaxbJsonProvider jacksonJaxbJsonProvider = new JacksonJaxbJsonProvider();
+		//		jacksonJaxbJsonProvider.setMapper(mapper);
+		//		providers.add(jacksonJaxbJsonProvider);
 
 		// context resolver
 		providers.add(new JacksonContextResolver());
@@ -180,7 +182,7 @@ public class ChariotServiceDirectoryApiTest extends Assert {
 		// Jackson mapper
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.registerModule(new DeviceMapperModule());
-		
+
 		// Create request
 		Response response = null;
 
@@ -198,7 +200,7 @@ public class ChariotServiceDirectoryApiTest extends Assert {
 		assertEquals(200, response.getStatus());
 
 		// Read object
-		System.out.println("WebClient Response: " + response.readEntity(String.class));
+		//System.out.println("WebClient Response: " + response.readEntity(String.class));
 		Device getDevice = response.readEntity(SensingDevice.class);
 
 		assertNotNull(getDevice);
@@ -206,6 +208,14 @@ public class ChariotServiceDirectoryApiTest extends Assert {
 		//assertEquals(device.getAccessibility(), Accessibility.OPEN);
 	}
 
+	//@Test
+	public void testIsReadableWithTestObject() {
+		//GsonProvider<TestObject> testObjectProvider = new GsonProvider<TestObject>();
+		ChariotMessageBodyReader testProvider = new ChariotMessageBodyReader();
+		boolean readable = testProvider.isReadable( Device.class, null, null, null );
+
+		assertTrue( readable );
+	}
 	/**
 	 * POST
 	 * @param obj
@@ -286,6 +296,6 @@ public class ChariotServiceDirectoryApiTest extends Assert {
 
 
 
-	
+
 
 }

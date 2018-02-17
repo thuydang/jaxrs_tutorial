@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jaxrs.Jaxrs2TypesModule;
 
 public class ChariotObjectMapper extends ObjectMapper{
 
@@ -23,6 +24,7 @@ public class ChariotObjectMapper extends ObjectMapper{
 		super.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_OBJECT); // all non-final types
 
 		// modules
+		super.registerModule(new Jaxrs2TypesModule());
 		//mapper.registerModule(new JSR310Module());
         super.registerModule(new DeviceMapperModule());
 	}

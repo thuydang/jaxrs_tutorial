@@ -25,9 +25,9 @@ import de.tutorial.jaxrs.model.runtimeenvironment.ActuatingDevice;
 import de.tutorial.jaxrs.model.runtimeenvironment.Device;
 import de.tutorial.jaxrs.model.runtimeenvironment.SensingDevice;
 
-//@Consumes({ "application/json", "application/xml"})
-@Consumes("application/json")
+@Consumes({ "application/json", "application/xml"})
 @Provider
+//@Consumes({"application/json"})
 public class ChariotMessageBodyReader implements MessageBodyReader<Object> {
 	static Logger logger = Logger.getLogger(ChariotMessageBodyReader.class);
 
@@ -37,10 +37,11 @@ public class ChariotMessageBodyReader implements MessageBodyReader<Object> {
         mapper = new ChariotObjectMapper();
 	}
 
-//	@Override
+	@Override
 	public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
 		logger.info(">>> Try reading... " + type);
 
+		
         if ( type.equals(Device.class) || type.equals(SensingDevice.class) || type.equals(ActuatingDevice.class) ){
         	return true;
         } else {
@@ -48,9 +49,10 @@ public class ChariotMessageBodyReader implements MessageBodyReader<Object> {
         }
 //        return InputStream.class.isAssignableFrom(type);
         return false;
+       
     }
 
-// 	@Override
+ 	@Override
 	public Device readFrom(Class<Object> type, Type genericType, Annotation[] annotations,
 			MediaType mediaType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {

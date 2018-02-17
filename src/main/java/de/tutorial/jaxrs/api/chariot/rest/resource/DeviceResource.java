@@ -13,6 +13,7 @@ import io.swagger.annotations.*;
 import com.gtarc.servicedirectory.api.chariot.rest.data.DummyServiceDirectory;
 
 import de.tutorial.jaxrs.model.runtimeenvironment.Device;
+import de.tutorial.jaxrs.model.runtimeenvironment.SensingDevice;
 
 /**
  * 
@@ -45,13 +46,15 @@ public class DeviceResource {
 
 	@POST
 	@Path("/echoRegister")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Create / Register runtime environment", 
+	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@ApiOperation(value = "Echo service", 
 	notes = "Create description of the runtime environment in Service Directory.")
 	public Response echoRegister(
-			@ApiParam(value = "Created RE description", required = true) Device device) {
-		serviceDirectoryConnector.addDevice(device);
-		return Response.ok().entity("").build();
+			@ApiParam(value = "entitiy parameter", required = true) SensingDevice device) {
+		//serviceDirectoryConnector.addDevice(device);
+		//System.out.println(device);
+		return Response.ok().entity(device).build();
 	}
 
 	
