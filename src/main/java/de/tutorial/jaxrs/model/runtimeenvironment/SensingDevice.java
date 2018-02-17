@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 import de.tutorial.jaxrs.model.properties.Property;
 import de.tutorial.jaxrs.model.runtimeenvironment.Device;;
 
-@XmlRootElement(name = "SensingDevice")
+//@XmlRootElement(name = "SensingDevice")
 public class SensingDevice implements Device {
 
 	private List<Property> mandatoryProperties = new ArrayList<Property>();
@@ -28,7 +28,7 @@ public class SensingDevice implements Device {
 	private String friendlyName;
 	private String vendor;
 
-	@XmlElement(name = "platform")
+//	@XmlElement(name = "platform")
 	public String getPlatform() {
 		return platform;
 	}
@@ -37,7 +37,7 @@ public class SensingDevice implements Device {
 		this.platform = platform;
 	}
 
-	@XmlElement(name = "reStatus")
+//	@XmlElement(name = "reStatus")
 	@ApiModelProperty(value = "Device Status", allowableValues = "1-registered,2-active,3-closed")
 	public int getStatus() {
 		return status;

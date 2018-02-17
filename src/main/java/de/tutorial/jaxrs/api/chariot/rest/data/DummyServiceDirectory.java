@@ -1,4 +1,4 @@
-package com.gtarc.servicedirectory.api.chariot.rest.data;
+package de.tutorial.jaxrs.api.chariot.rest.data;
 import java.util.List;
 import java.util.UUID;
 

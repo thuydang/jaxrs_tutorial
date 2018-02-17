@@ -1,4 +1,4 @@
-package com.gtarc.servicedirectory.api.chariot.rest;
+package de.tutorial.jaxrs.api.chariot.rest;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

@@ -1,4 +1,4 @@
-package com.gtarc.servicedirectory.api.chariot.rest.jaxrs;
+package de.tutorial.jaxrs.api.chariot.rest.jaxrs;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -21,8 +21,8 @@ import javax.ws.rs.ext.Provider;
 import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gtarc.servicedirectory.api.chariot.rest.jackson.ChariotObjectMapper;
 
+import de.tutorial.jaxrs.api.chariot.rest.jackson.ChariotObjectMapper;
 import de.tutorial.jaxrs.model.runtimeenvironment.ActuatingDevice;
 import de.tutorial.jaxrs.model.runtimeenvironment.Device;
 import de.tutorial.jaxrs.model.runtimeenvironment.SensingDevice;

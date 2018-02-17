@@ -1,4 +1,4 @@
-package com.gtarc.servicedirectory.api.chariot.rest;
+package de.tutorial.jaxrs.api.chariot.rest;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -35,11 +35,11 @@ import com.fasterxml.jackson.datatype.jaxrs.Jaxrs2TypesModule;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.gtarc.servicedirectory.api.chariot.rest.jackson.DeviceMapperModule;
-import com.gtarc.servicedirectory.api.chariot.rest.jaxrs.ChariotMessageBodyReader;
-import com.gtarc.servicedirectory.api.chariot.rest.jaxrs.ChariotMessageBodyWriter;
-import com.gtarc.servicedirectory.api.chariot.rest.jaxrs.JacksonContextResolver;
 
+import de.tutorial.jaxrs.api.chariot.rest.jackson.DeviceMapperModule;
+import de.tutorial.jaxrs.api.chariot.rest.jaxrs.ChariotMessageBodyReader;
+import de.tutorial.jaxrs.api.chariot.rest.jaxrs.ChariotMessageBodyWriter;
+import de.tutorial.jaxrs.api.chariot.rest.jaxrs.JacksonContextResolver;
 import de.tutorial.jaxrs.api.chariot.rest.resource.DeviceResource;
 import de.tutorial.jaxrs.model.runtimeenvironment.Device;
 import de.tutorial.jaxrs.model.runtimeenvironment.SensingDevice;
@@ -102,8 +102,9 @@ public class ChariotServiceDirectoryApiTest extends Assert {
 
 
 		// Using ObjectMapperResolver / Provider
+		/* class JacksonJsonProvider implementing javax.ws.rs.ext.MessageBodyReader and javax.ws.rs.ext.MessageBodyWriter that JAX-RS defines for pluggable support for data formats. JacksonJsonProvider (and JacksonJaxbJsonProvider) can then be registered with JAX-RS container to make Jackson the standard JSON reader/writer provider.*/
 		JacksonJsonProvider jacksonJsonProvider = new JacksonJsonProvider();
-		//		new JacksonJsonProvider(mapper);
+//				new JacksonJsonProvider(mapper);
 		//jacksonJsonProvider.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
 		providers.add(jacksonJsonProvider);
 
@@ -114,12 +115,11 @@ public class ChariotServiceDirectoryApiTest extends Assert {
 
 		// context resolver
 		providers.add(new JacksonContextResolver());
-		// message body
+//		// message body
 		providers.add(new ChariotMessageBodyWriter());
 		providers.add(new ChariotMessageBodyReader());
+
 		sf.setProvider(providers);
-
-
 
 		sf.setResourceClasses(DeviceResource.class);
 		sf.setResourceProvider(DeviceResource.class,

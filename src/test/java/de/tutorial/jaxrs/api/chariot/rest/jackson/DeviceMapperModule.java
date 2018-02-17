@@ -1,4 +1,4 @@
-package com.gtarc.servicedirectory.api.chariot.rest.jackson;
+package de.tutorial.jaxrs.api.chariot.rest.jackson;
 /* ObjectMapper Module */
 
 import java.net.URI;

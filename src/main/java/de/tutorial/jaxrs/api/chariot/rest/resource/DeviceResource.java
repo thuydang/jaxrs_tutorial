@@ -9,9 +9,7 @@ import java.util.UUID;
 import javax.ws.rs.*;
 
 import io.swagger.annotations.*;
-
-import com.gtarc.servicedirectory.api.chariot.rest.data.DummyServiceDirectory;
-
+import de.tutorial.jaxrs.api.chariot.rest.data.DummyServiceDirectory;
 import de.tutorial.jaxrs.model.runtimeenvironment.Device;
 import de.tutorial.jaxrs.model.runtimeenvironment.SensingDevice;
 

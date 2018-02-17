@@ -5,8 +5,7 @@ import io.swagger.annotations.*;
 
 import javax.ws.rs.core.Response;
 
-import com.gtarc.servicedirectory.api.chariot.rest.data.UserData;
-
+import de.tutorial.jaxrs.api.chariot.rest.data.UserData;
 import de.tutorial.jaxrs.model.runtimeenvironment.User;
 
 import javax.ws.rs.*;
@@ -23,7 +22,7 @@ public class UserResource {
   public Response createUser(
       @ApiParam(value = "Created user object", required = true) de.tutorial.jaxrs.model.runtimeenvironment.User user) {
     userData.addUser(user);
-    return Response.ok().entity("").build();
+    return Response.ok().entity(user).build();
   }
 
     @POST

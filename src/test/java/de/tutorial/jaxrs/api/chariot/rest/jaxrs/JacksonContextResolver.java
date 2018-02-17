@@ -1,4 +1,4 @@
-package com.gtarc.servicedirectory.api.chariot.rest.jaxrs;
+package de.tutorial.jaxrs.api.chariot.rest.jaxrs;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
@@ -7,7 +7,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.gtarc.servicedirectory.api.chariot.rest.jackson.DeviceMapperModule;
+
+import de.tutorial.jaxrs.api.chariot.rest.jackson.DeviceMapperModule;
 
 	/* ContextResolver for custome objectmapper */
 @Provider
