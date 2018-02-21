@@ -20,8 +20,8 @@ import de.tutorial.jaxrs.model.runtimeenvironment.SensingDevice;
  */
 @Path("/device")
 @Api(value="/device", description = "Operations about device")
-@Produces({"application/json"})
-@Consumes({"application/json"})
+@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, "application/jsonchariot" })
+@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, "application/jsonchariot" })
 public class DeviceResource {
 
 	/** TODO: Logging? */
@@ -44,8 +44,8 @@ public class DeviceResource {
 
 	@POST
 	@Path("/echoRegister")
-	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, "application/jsonchariot" })
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, "application/jsonchariot" })
 	@ApiOperation(value = "Echo service", 
 	notes = "Create description of the runtime environment in Service Directory.")
 	public Response echoRegister(

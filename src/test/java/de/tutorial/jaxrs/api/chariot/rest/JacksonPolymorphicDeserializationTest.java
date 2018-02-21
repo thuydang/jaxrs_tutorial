@@ -125,7 +125,7 @@ public class JacksonPolymorphicDeserializationTest extends Assert {
 		Dog dog = new Dog();
 		String dogJson = "";
 
-		ObjectMapper mapper = new ObjectMapper(); // <-- here it is!!!
+		ObjectMapper mapper = new ObjectMapper(); // <-- new mapper must be created. 
 
 		mapper.registerModule(new MyMapperModule());
 		//mapper.getSerializationConfig().addMixInAnnotations(Dog.class, DogMixIn.class);

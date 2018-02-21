@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.MessageBodyReader;
 
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
@@ -16,6 +17,9 @@ import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider;
+import org.apache.cxf.jaxrs.provider.ProviderFactory;
+import org.apache.cxf.jaxrs.provider.ServerProviderFactory;
+import org.apache.cxf.message.MessageImpl;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -36,6 +40,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import de.tutorial.jaxrs.api.chariot.rest.jackson.ChariotObjectMapper;
 import de.tutorial.jaxrs.api.chariot.rest.jackson.DeviceMapperModule;
 import de.tutorial.jaxrs.api.chariot.rest.jaxrs.ChariotMessageBodyReader;
 import de.tutorial.jaxrs.api.chariot.rest.jaxrs.ChariotMessageBodyWriter;
@@ -104,22 +109,27 @@ public class ChariotServiceDirectoryApiTest extends Assert {
 		// Using ObjectMapperResolver / Provider
 		/* class JacksonJsonProvider implementing javax.ws.rs.ext.MessageBodyReader and javax.ws.rs.ext.MessageBodyWriter that JAX-RS defines for pluggable support for data formats. JacksonJsonProvider (and JacksonJaxbJsonProvider) can then be registered with JAX-RS container to make Jackson the standard JSON reader/writer provider.*/
 		JacksonJsonProvider jacksonJsonProvider = new JacksonJsonProvider();
-//				new JacksonJsonProvider(mapper);
+		jacksonJsonProvider.setMapper(new ChariotObjectMapper());
 		//jacksonJsonProvider.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
-		providers.add(jacksonJsonProvider);
+
+//		providers.add(jacksonJsonProvider);
 
 		//jackson jaxb
-		//		JacksonJaxbJsonProvider jacksonJaxbJsonProvider = new JacksonJaxbJsonProvider();
+//				JacksonJaxbJsonProvider jacksonJaxbJsonProvider = new JacksonJaxbJsonProvider();
 		//		jacksonJaxbJsonProvider.setMapper(mapper);
-		//		providers.add(jacksonJaxbJsonProvider);
+//				providers.add(jacksonJaxbJsonProvider);
 
 		// context resolver
 		providers.add(new JacksonContextResolver());
 //		// message body
-		providers.add(new ChariotMessageBodyWriter());
 		providers.add(new ChariotMessageBodyReader());
+		providers.add(new ChariotMessageBodyWriter());
 
-		sf.setProvider(providers);
+		
+		//		sf.setProvider(providers);
+		//assertEquals("Get a wrong proider size", 3, sf.getProviders().size());
+
+		providers.forEach(p -> sf.setProvider(p));
 
 		sf.setResourceClasses(DeviceResource.class);
 		sf.setResourceProvider(DeviceResource.class,
@@ -153,9 +163,10 @@ public class ChariotServiceDirectoryApiTest extends Assert {
 		System.out.println(">>> Begin Test <<<");
 
 		WebClient client = WebClient.create(ENDPOINT_ADDRESS, providers);
-		client.type(MediaType.APPLICATION_JSON);
-		client.accept(MediaType.APPLICATION_JSON);
-		//client.accept(MediaType.APPLICATION_XML);
+//		client.type(MediaType.APPLICATION_JSON);
+//		client.accept(MediaType.APPLICATION_JSON);
+		client.type("application/json");
+		client.accept("application/json");
 		client.path("/device/echoRegister/");
 
 		ClientConfiguration config = WebClient.getConfig(client);
@@ -207,6 +218,19 @@ public class ChariotServiceDirectoryApiTest extends Assert {
 		//assertEquals("1234", response);
 		//assertEquals(device.getAccessibility(), Accessibility.OPEN);
 	}
+
+    @Test
+    public void testAtomPojoProvider() {
+        ProviderFactory pf = ServerProviderFactory.getInstance();
+        JacksonJsonProvider provider = new JacksonJsonProvider();
+        pf.registerUserProvider(provider);
+
+        MessageBodyReader<?> feedReader = pf.createMessageBodyReader(Device.class,
+                                               Device.class, null,
+                                               MediaType.valueOf("application/json"),
+                                               new MessageImpl());
+        assertSame(feedReader, provider);
+    }
 
 	//@Test
 	public void testIsReadableWithTestObject() {

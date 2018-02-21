@@ -25,10 +25,10 @@ import de.tutorial.jaxrs.model.runtimeenvironment.ActuatingDevice;
 import de.tutorial.jaxrs.model.runtimeenvironment.Device;
 import de.tutorial.jaxrs.model.runtimeenvironment.SensingDevice;
 
-@Consumes({ "application/json", "application/xml"})
+//@Consumes({ "application/json", "application/xml"})
 @Provider
-//@Consumes({"application/json"})
-public class ChariotMessageBodyReader implements MessageBodyReader<Object> {
+@Consumes("application/json")
+public class ChariotMessageBodyReader implements MessageBodyReader<SensingDevice> {
 	static Logger logger = Logger.getLogger(ChariotMessageBodyReader.class);
 
 	private final ObjectMapper mapper;
@@ -53,14 +53,16 @@ public class ChariotMessageBodyReader implements MessageBodyReader<Object> {
     }
 
  	@Override
-	public Device readFrom(Class<Object> type, Type genericType, Annotation[] annotations,
+	public SensingDevice readFrom(Class<SensingDevice> type, Type genericType, Annotation[] annotations,
 			MediaType mediaType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
  		
  		final String jsonData = getStringFromInputStream(entityStream);
         
-        if (type.equals( type.equals(Device.class))){
-        	Device retDevice = mapper.readValue(stringToStream(jsonData), Device.class);
+        if (SensingDevice.class.isAssignableFrom(type)){
+        	logger.info(">>> Reading... " + type);
+//        	Device retDevice = mapper.readValue(stringToStream(jsonData), Device.class);
+        	SensingDevice retDevice = mapper.readValue(stringToStream(jsonData), SensingDevice.class);
         	return retDevice;
         }
         
