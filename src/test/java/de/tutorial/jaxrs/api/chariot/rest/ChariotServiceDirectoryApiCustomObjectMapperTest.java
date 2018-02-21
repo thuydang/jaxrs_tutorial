@@ -58,8 +58,8 @@ import de.tutorial.jaxrs.model.util.builder.PropertyBuilder;
  * @author dang
  *
  */
-public class ChariotServiceDirectoryApiTest extends Assert {
-	static Logger logger = Logger.getLogger(ChariotServiceDirectoryApiTest.class);
+public class ChariotServiceDirectoryApiCustomObjectMapperTest extends Assert {
+	static Logger logger = Logger.getLogger(ChariotServiceDirectoryApiCustomObjectMapperTest.class);
 
 	// REST 
 	private final static String ENDPOINT_ADDRESS = "http://localhost:8082/";

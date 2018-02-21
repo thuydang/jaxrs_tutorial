@@ -49,7 +49,7 @@ public class DeviceResource {
 	@ApiOperation(value = "Echo service", 
 	notes = "Create description of the runtime environment in Service Directory.")
 	public Response echoRegister(
-			@ApiParam(value = "entitiy parameter", required = true) SensingDevice device) {
+			@ApiParam(value = "entitiy parameter", required = true) Device device) {
 		//serviceDirectoryConnector.addDevice(device);
 		//System.out.println(device);
 		return Response.ok().entity(device).build();
