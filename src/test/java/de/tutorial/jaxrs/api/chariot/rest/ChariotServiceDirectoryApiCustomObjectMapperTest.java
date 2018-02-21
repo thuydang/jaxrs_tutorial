@@ -114,24 +114,27 @@ public class ChariotServiceDirectoryApiCustomObjectMapperTest extends Assert {
 
 		providers.add(jacksonJsonProvider);
 
+		/*
 		//jackson jaxb
-//				JacksonJaxbJsonProvider jacksonJaxbJsonProvider = new JacksonJaxbJsonProvider();
-		//		jacksonJaxbJsonProvider.setMapper(mapper);
-//				providers.add(jacksonJaxbJsonProvider);
+		JacksonJaxbJsonProvider jacksonJaxbJsonProvider = new JacksonJaxbJsonProvider();
+		jacksonJaxbJsonProvider.setMapper(mapper);
+		providers.add(jacksonJaxbJsonProvider);
+		*/
 
+		/*
 		// context resolver
-//		providers.add(new JacksonContextResolver());
-////		// message body
-//		providers.add(new ChariotMessageBodyReader());
-//		providers.add(new ChariotMessageBodyWriter());
-
+		providers.add(new JacksonContextResolver());
+		// message body
+		providers.add(new ChariotMessageBodyReader());
+		providers.add(new ChariotMessageBodyWriter());
+		*/
 		
-		//		sf.setProvider(providers);
+		//sf.setProvider(providers); // <-- List as parameter, no error!!!
 		//assertEquals("Get a wrong proider size", 1, sf.getProviders().size());
 
-		sf.setProviders(providers);
+		sf.setProviders(providers); // <-- List parameter
 		//providers.forEach(p -> sf.setProvider(p));
-//		assertEquals("Get a wrong proider size", 3, sf.getProviders().size());
+		//assertEquals("Get a wrong proider size", 3, sf.getProviders().size());
 
 		sf.setResourceClasses(DeviceResource.class);
 		sf.setResourceProvider(DeviceResource.class,

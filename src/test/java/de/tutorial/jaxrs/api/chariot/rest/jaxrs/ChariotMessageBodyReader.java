@@ -23,12 +23,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.tutorial.jaxrs.api.chariot.rest.jackson.ChariotObjectMapper;
 import de.tutorial.jaxrs.model.runtimeenvironment.ActuatingDevice;
 import de.tutorial.jaxrs.model.runtimeenvironment.Device;
-import de.tutorial.jaxrs.model.runtimeenvironment.SensingDevice;
 
 //@Consumes({ "application/json", "application/xml"})
 @Provider
 @Consumes("application/json")
-public class ChariotMessageBodyReader implements MessageBodyReader<SensingDevice> {
+public class ChariotMessageBodyReader implements MessageBodyReader<Device> {
 	static Logger logger = Logger.getLogger(ChariotMessageBodyReader.class);
 
 	private final ObjectMapper mapper;
@@ -42,7 +41,7 @@ public class ChariotMessageBodyReader implements MessageBodyReader<SensingDevice
 		logger.info(">>> Try reading... " + type);
 
 		
-        if ( type.equals(Device.class) || type.equals(SensingDevice.class) || type.equals(ActuatingDevice.class) ){
+        if ( type.equals(Device.class) || type.equals(Device.class) || type.equals(ActuatingDevice.class) ){
         	return true;
         } else {
         	System.out.println(this.getClass() + " Can not read: " + type);
@@ -53,16 +52,16 @@ public class ChariotMessageBodyReader implements MessageBodyReader<SensingDevice
     }
 
  	@Override
-	public SensingDevice readFrom(Class<SensingDevice> type, Type genericType, Annotation[] annotations,
+	public Device readFrom(Class<Device> type, Type genericType, Annotation[] annotations,
 			MediaType mediaType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream)
 			throws IOException, WebApplicationException {
  		
  		final String jsonData = getStringFromInputStream(entityStream);
         
-        if (SensingDevice.class.isAssignableFrom(type)){
+        if (Device.class.isAssignableFrom(type)){
         	logger.info(">>> Reading... " + type);
 //        	Device retDevice = mapper.readValue(stringToStream(jsonData), Device.class);
-        	SensingDevice retDevice = mapper.readValue(stringToStream(jsonData), SensingDevice.class);
+        	Device retDevice = mapper.readValue(stringToStream(jsonData), Device.class);
         	return retDevice;
         }
         

@@ -58,8 +58,8 @@ import de.tutorial.jaxrs.model.util.builder.PropertyBuilder;
  * @author dang
  *
  */
-public class ChariotServiceDirectoryApiTest extends Assert {
-	static Logger logger = Logger.getLogger(ChariotServiceDirectoryApiTest.class);
+public class ChariotServiceDirectoryApiMessageBodyProvidersTest extends Assert {
+	static Logger logger = Logger.getLogger(ChariotServiceDirectoryApiMessageBodyProvidersTest.class);
 
 	// REST 
 	private final static String ENDPOINT_ADDRESS = "http://localhost:8082/";
@@ -112,26 +112,28 @@ public class ChariotServiceDirectoryApiTest extends Assert {
 		jacksonJsonProvider.setMapper(new ChariotObjectMapper());
 		//jacksonJsonProvider.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
 
-		providers.add(jacksonJsonProvider);
+		// Not using this Json Provider, enable MessagBody providers below
+		//providers.add(jacksonJsonProvider);
 
+		/*
 		//jackson jaxb
-//				JacksonJaxbJsonProvider jacksonJaxbJsonProvider = new JacksonJaxbJsonProvider();
-		//		jacksonJaxbJsonProvider.setMapper(mapper);
-//				providers.add(jacksonJaxbJsonProvider);
+		JacksonJaxbJsonProvider jacksonJaxbJsonProvider = new JacksonJaxbJsonProvider();
+		jacksonJaxbJsonProvider.setMapper(mapper);
+		providers.add(jacksonJaxbJsonProvider);
+		*/
 
 		// context resolver
-//		providers.add(new JacksonContextResolver());
-////		// message body
-//		providers.add(new ChariotMessageBodyReader());
-//		providers.add(new ChariotMessageBodyWriter());
-
+		//providers.add(new JacksonContextResolver());
+		// message body
+		providers.add(new ChariotMessageBodyReader());
+		providers.add(new ChariotMessageBodyWriter());
 		
-		//		sf.setProvider(providers);
+		//sf.setProvider(providers); // <-- List as parameter, no error!!!
 		//assertEquals("Get a wrong proider size", 1, sf.getProviders().size());
 
-		sf.setProviders(providers);
+		sf.setProviders(providers); // <-- List parameter
 		//providers.forEach(p -> sf.setProvider(p));
-//		assertEquals("Get a wrong proider size", 3, sf.getProviders().size());
+		//assertEquals("Get a wrong proider size", 3, sf.getProviders().size());
 
 		sf.setResourceClasses(DeviceResource.class);
 		sf.setResourceProvider(DeviceResource.class,
@@ -214,13 +216,69 @@ public class ChariotServiceDirectoryApiTest extends Assert {
 
 		// Read object
 		//System.out.println("WebClient Response: " + response.readEntity(String.class));
-		Device getDevice = response.readEntity(SensingDevice.class);
+		Device getDevice = response.readEntity(Device.class);
 
 		assertNotNull(getDevice);
 		//assertEquals("1234", response);
 		//assertEquals(device.getAccessibility(), Accessibility.OPEN);
 	}
 
+	@Test
+	public void testPostChildObjectWithWebClient() {
+		System.out.println(">>> Begin Test <<<");
+
+		WebClient client = WebClient.create(ENDPOINT_ADDRESS, providers);
+//		client.type(MediaType.APPLICATION_JSON);
+//		client.accept(MediaType.APPLICATION_JSON);
+		client.type("application/json");
+		client.accept("application/json");
+		client.path("/device/echoRegister/");
+
+		ClientConfiguration config = WebClient.getConfig(client);
+		config.getInInterceptors().add(new LoggingInInterceptor());
+		config.getOutInterceptors().add(new LoggingOutInterceptor());
+
+		// Create Device
+		Device device = new DeviceBuilder()
+				.setName("Camera")
+				.setNamespaceUri(URI.create("http://iolite.de"))
+				.setIdentifier(URI.create("http://iolite.de#" + "Camera1"))
+				.addMandatoryProperties(new PropertyBuilder()
+						.setLabel("liveVideoUri")
+						.setUnit("URI")
+						.setValue("camera1.livestream.com")
+						.build())
+				.addOptionalProperties(new PropertyBuilder()
+						.setLabel("batteryLevel")
+						.setUnit("%")
+						.setValue(Integer.parseInt("80"))
+						.build())
+				.buildActuating();
+
+		// Jackson mapper
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.registerModule(new DeviceMapperModule());
+
+		// Create request
+		Response response = null;
+
+		try {
+			System.out.println(">>> WebClient post: " + mapper.writeValueAsString(device));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		response = client.post(device);
+		// Response Error 415: caused by no message body reader.
+		assertEquals(200, response.getStatus());
+
+		// Read object
+		//System.out.println("WebClient Response: " + response.readEntity(String.class));
+		Device getDevice = response.readEntity(Device.class);
+
+		assertNotNull(getDevice);
+	}
+	
     @Test
     public void testAtomPojoProvider() {
         ProviderFactory pf = ServerProviderFactory.getInstance();
